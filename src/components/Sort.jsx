@@ -1,14 +1,13 @@
 import React from "react";
 
-function Sort() {
+function Sort({ value, onChangeSort }) {
 
     const [isVisiblePopup, setIsVisiblePopup] = React.useState(false)
-    const [selected, setSelected] = React.useState(0)
     const list = ['популярности', 'цене', 'алфавиту']
-    const sortName = list[selected]
+    const sortName = list[value]
 
     const onClickListItem = (i) => {
-        setSelected(i);
+        onChangeSort(i);
         setIsVisiblePopup(false);
     }
 
@@ -37,7 +36,7 @@ function Sort() {
                         <li
                             key={i}
                             onClick={() => onClickListItem(i)}
-                        className={selected === i ? 'active' : ''}>
+                        className={value === i ? 'active' : ''}>
                             {name}
                         </li>
                         )
