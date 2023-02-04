@@ -3,8 +3,11 @@ import React from "react";
 function Sort({ value, onChangeSort }) {
 
     const [isVisiblePopup, setIsVisiblePopup] = React.useState(false)
-    const list = ['популярности', 'цене', 'алфавиту']
-    const sortName = list[value]
+    const list = [
+        {name: 'популярности', sortProperty: 'rating'},
+        {name: 'цене', sortProperty: 'price'},
+        {name: 'алфавиту', sortProperty: 'title'}
+    ]
 
     const onClickListItem = (i) => {
         onChangeSort(i);
@@ -26,7 +29,7 @@ function Sort({ value, onChangeSort }) {
                 />
             </svg>
             <b>Сортировка по:</b>
-            <span onClick={() => setIsVisiblePopup(!isVisiblePopup)}>{sortName}</span>
+            <span onClick={() => setIsVisiblePopup(!isVisiblePopup)}>{value.name}</span>
         </div>
         {
             isVisiblePopup && (
@@ -35,9 +38,9 @@ function Sort({ value, onChangeSort }) {
                     {list.map((name, i) => (
                         <li
                             key={i}
-                            onClick={() => onClickListItem(i)}
-                        className={value === i ? 'active' : ''}>
-                            {name}
+                            onClick={() => onClickListItem(name)}>
+
+                            {name.name}
                         </li>
                         )
                     )

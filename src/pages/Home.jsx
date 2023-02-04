@@ -4,18 +4,24 @@ import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import PizzaBlock from "../components/PizzaBlock";
-import sort from "../components/Sort";
 
 function Home() {
 
     const [items, setItems] = React.useState([])
     const [isLoading, setIsLoading] = React.useState(true)
     const [categoryID, setCategoryID] = React.useState(555)
-    const [sortType, setSortType] = React.useState(0)
+    const [sortType, setSortType] = React.useState({
+        name: 'популярности',
+        sortProperty: 'rating',
+    })
 
     React.useEffect(() => {
         setIsLoading(true)
-        fetch('https://63da2f7c19fffcd620c2b9a5.mockapi.io/items?category=' + categoryID).then((resp) => {
+        fetch(`https://63da2f7c19fffcd620c2b9a5.mockapi.io/items?${
+            categoryID > 0 ? `category=${categoryID}` : ''
+        }&sortBy=${sortType.sortProperty}&order=desc`
+        )
+            .then((resp) => {
             return resp.json()
         }).then((arr) => {
             setItems(arr)
@@ -34,7 +40,7 @@ function Home() {
         <div className="content__items">
             {isLoading
                 ? [... new Array(6)].map((_, index) => <Skeleton key={index} />)
-                : items.map((obj) => <PizzaBlock key={obj.id} {... obj}/>)}
+                : items.map((obj) => <PizzaBlock key={obj.id} {...obj}/>)}
         </div>
         </div>
     )
