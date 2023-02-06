@@ -4,9 +4,12 @@ function Sort({ value, onChangeSort }) {
 
     const [isVisiblePopup, setIsVisiblePopup] = React.useState(false)
     const list = [
-        {name: 'популярности', sortProperty: 'rating'},
-        {name: 'цене', sortProperty: 'price'},
-        {name: 'алфавиту', sortProperty: 'title'}
+        {name: 'популярности (DESK)', sortProperty: 'rating'},
+        {name: 'популярности (ASK)', sortProperty: '-rating'},
+        {name: 'цене (DESK)', sortProperty: 'price'},
+        {name: 'цене (ASK)', sortProperty: '-price'},
+        {name: 'алфавиту (DESK)', sortProperty: 'title'},
+        {name: 'алфавиту (ASK)', sortProperty: '-title'},
     ]
 
     const onClickListItem = (i) => {
@@ -35,12 +38,12 @@ function Sort({ value, onChangeSort }) {
             isVisiblePopup && (
                 <div className="sort__popup">
                 <ul>
-                    {list.map((name, i) => (
+                    {list.map((obj, i) => (
                         <li
                             key={i}
-                            onClick={() => onClickListItem(name)}>
-
-                            {name.name}
+                            onClick={() => onClickListItem(obj)}
+                            className={value.sortProperty === obj.sortProperty ? 'active' : ''}>
+                            {obj.name}
                         </li>
                         )
                     )

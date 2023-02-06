@@ -15,12 +15,15 @@ function Home() {
         sortProperty: 'rating',
     })
 
+
     React.useEffect(() => {
+
+        const category = categoryID > 0 ? `category=${categoryID}` : ''
+        const sortBy = sortType.sortProperty.replace('-', '')
+        const order = sortType.sortProperty.includes('-') ? 'asc' : 'desk'
+
         setIsLoading(true)
-        fetch(`https://63da2f7c19fffcd620c2b9a5.mockapi.io/items?${
-            categoryID > 0 ? `category=${categoryID}` : ''
-        }&sortBy=${sortType.sortProperty}&order=desc`
-        )
+        fetch(`https://63da2f7c19fffcd620c2b9a5.mockapi.io/items?${category}&sortBy=${sortBy}&order=${order}`)
             .then((resp) => {
             return resp.json()
         }).then((arr) => {
